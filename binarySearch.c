@@ -1,66 +1,63 @@
 #include <stdio.h>
-void bubbleSort(int array[],int array_lmt)
+void selectionSort(int array[],int array_limit)
 {
-	int i,j,temp; 
-	for(i=0;i<array_lmt;i++)
-	{
-		for(j=0;j<array_lmt;j++)
-		{
-			if(array[i]<array[j])
-			{
-				temp=array[i];
-				array[i]=array[j];
-				array[j]=temp;
-			}
-		}
-	}
+    for (int i=0;i<array_limit-1;i++) {
+        int minIndex=i;
+        for (int j=i+1;j<array_limit;j++) {
+            if (array[j]<array[minIndex]) {
+                minIndex=j;
+            }
+        }
+        if(minIndex!=i){
+            int temp=array[i];
+            array[i]=array[minIndex];
+            array[minIndex]=temp;
+        }
+    }
 }
-int binSearch(int array[],int ar_lmt,int searchData)
+int binarySearch(int array[],int ar_lmt,int data)
 {
-	int low=0,high=ar_lmt-1,mid=(low+high)/2;
-	while(array[mid]!=searchData)
+	int low=0,high=ar_lmt-1;
+	while(low<=high)
 	{
-		if(searchData>array[mid])
-		{
+		int mid=low+(high-low)/2;
+		if(data==array[mid])
+			return mid;
+		else if(data>array[mid])
 			low=mid+1;
-			mid=(low+high)/2;
-		}
-		else if(searchData<array[mid])
-		{
+		else
 			high=mid-1;
-			mid=(low+high)/2;
-		}
 	}
-	return mid;
+	return -1;
 }
 int main()
 {
-	int inpArray[100],limit,i,bSearch,searchElm;
-	printf("Enter the Number of Elements in the Array: ");
-	scanf("%d",&limit);
+	int inpArray[200],i,varBin,arraySize,searchData;
+	printf("Enter the Size of the Array: ");
+	scanf("%d",&arraySize);
 	printf("Enter the Elements of the Array: \n");
-	for(i=0;i<limit;i++)
+	for(i=0;i<arraySize;i++)
 	{
-		printf("Enter the Element #%d: ",i);
+		printf("Enter Element #%d: ",i);
 		scanf("%d",&inpArray[i]);
 	}
-	printf("\nEnter the Element You Want To Search For: ");
-	scanf("%d",&searchElm);
-	bubbleSort(inpArray,limit);
-	printf("\nThe Sorted Array: [");
-	int commaCount=0;
-	for(i=0;i<limit;i++)
-	{
-		printf("%d",inpArray[i]);
-		commaCount++;
-		if(commaCount!=limit)
-			printf(",");	
-	}
+	printf("Enter the Element You Want to Search for in the Array: ");
+	scanf("%d",&searchData);
+	selectionSort(inpArray,arraySize);
+	int commaCounter=0;
+	printf("The Sorted Array: [");
+	for(i=0;i<arraySize;i++)
+        {
+                printf("%d",inpArray[i]);
+		commaCounter++;
+		if(commaCounter!=arraySize)
+			printf(",");
+        }
 	printf("]\n");
-	bSearch=binSearch(inpArray,limit,searchElm);
-	if(bSearch>-1)
-		printf("The Element %d is at the index %d of the array!\n ",searchElm,bSearch);
+	varBin=binarySearch(inpArray,arraySize,searchData);
+	if(varBin!=-1)
+		printf("The Element %d was found in the %d index of the array!",searchData,varBin);
 	else
-		printf("Element Was Not Found in Array!");
+		printf("Element %d Was Not Found in the Array!",searchData);
 	return 0;
 }
