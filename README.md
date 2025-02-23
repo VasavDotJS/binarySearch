@@ -1,7 +1,7 @@
 # binarySearch(main)
 Performs binary search on an array.
 
-# binSearch & bubbleSort
+# binSearch & selectionSort
 Is already a function in binarySearch(main), however I seperated them into seperate modules for easier usage after **cloning** the repository
 
 To clone repository, open command prompt/terminal:
